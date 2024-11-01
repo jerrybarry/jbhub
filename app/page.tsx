@@ -9,19 +9,37 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 
-import boutiqueSettersImage from '@/images/boutiquesetters.png';
-import kbycOnlineImage from '@/images/kbyconline.png';
-import njaSpirit from '@/images/9jaspirit.png';
-import sexAcademyImage from '@/images/sexacademy.png';
-// Add global styles to your global.css or equivalent
-// html, body { margin: 0; padding: 0; width: 100%; }
+import boutiqueSettersImage from '@/images/boutiquesetters.png'
+import kbycOnlineImage from '@/images/kbyconline.png'
+import njaSpirit from '@/images/9jaspirit.png'
+import sexAcademyImage from '@/images/sexacademy.png'
+
+type Project = {
+  id: number
+  title: string
+  description: string
+  url: string
+  image: any
+  tags: string[]
+}
+
+type Skill = {
+  name: string
+  level: number
+}
+
+type Logo = {
+  id: number
+  name: string
+  url: string
+}
 
 export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [skillProgress, setSkillProgress] = useState<Record<string, number>>({})
 
-  const projects = [
+  const projects: Project[] = [
     {
       id: 1,
       title: 'Boutique Setters',
@@ -56,7 +74,7 @@ export default function Portfolio() {
     }
   ]
 
-  const skills = useMemo(() => [
+  const skills: Skill[] = useMemo(() => [
     { name: 'WordPress', level: 95 },
     { name: 'PHP', level: 85 },
     { name: 'JavaScript', level: 80 },
@@ -67,6 +85,12 @@ export default function Portfolio() {
     { name: 'Graphics Design', level: 85 },
     { name: 'Responsive Design', level: 90 }
   ], [])
+
+  const logos: Logo[] = Array.from({ length: 12 }, (_, i) => ({
+    id: i + 1,
+    name: `Logo ${i + 1}`,
+    url: 'https://example.com'
+  }))
 
   useEffect(() => {
     setMounted(true)
@@ -114,6 +138,9 @@ export default function Portfolio() {
                   </Link>
                   <Link href="#skills" className="relative rounded-full px-3 py-1.5 text-sm font-medium text-white hover:bg-white/10 transition-colors">
                     Skills
+                  </Link>
+                  <Link href="#logos" className="relative rounded-full px-3 py-1.5 text-sm font-medium text-white hover:bg-white/10 transition-colors">
+                    Logos
                   </Link>
                   <Link href="#contact" className="relative rounded-full px-3 py-1.5 text-sm font-medium text-white hover:bg-white/10 transition-colors">
                     Contact
@@ -176,6 +203,13 @@ export default function Portfolio() {
                   Skills
                 </Link>
                 <Link
+                  href="#logos"
+                  className="block w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-white hover:bg-white/10"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Logos
+                </Link>
+                <Link
                   href="#contact"
                   className="block w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-white hover:bg-white/10"
                   onClick={() => setMobileMenuOpen(false)}
@@ -202,7 +236,7 @@ export default function Portfolio() {
             </section>
 
             <section id="projects" className="w-full max-w-6xl mx-auto px-4 sm:px-6 mb-32">
-              <h2 className="text-4xl font-bold mb-12 text-center" id="projects">Featured Projects</h2>
+              <h2 className="text-4xl font-bold mb-12 text-center">Featured Projects</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {projects.map((project) => (
                   <Card key={project.id} className="group bg-white/5 border-white/10 backdrop-blur-sm overflow-hidden">
@@ -245,7 +279,7 @@ export default function Portfolio() {
             </section>
 
             <section id="skills" className="w-full max-w-6xl mx-auto px-4 sm:px-6 mb-32">
-              <h2 className="text-4xl font-bold mb-12 text-center" id="skills">Skills & Expertise</h2>
+              <h2 className="text-4xl font-bold mb-12 text-center">Skills & Expertise</h2>
               <div className="grid gap-6 max-w-2xl mx-auto">
                 {skills.map((skill) => (
                   <div key={skill.name} className="space-y-2">
@@ -259,10 +293,30 @@ export default function Portfolio() {
               </div>
             </section>
 
+            <section id="logos" className="w-full max-w-6xl mx-auto px-4 sm:px-6 mb-32">
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
+                {logos.map((logo) => (
+                  <Link key={logo.id} href={logo.url} target="_blank" rel="noopener noreferrer" className="group">
+                    <div className="flex items-center justify-center h-16 transition-opacity group-hover:opacity-80">
+                      <Image
+                        src={`/placeholder.svg?height=64&width=120`}
+                        alt={logo.name}
+                        width={120}
+                        height={64}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            
+
             <section id="contact" className="w-full max-w-6xl mx-auto px-4 sm:px-6 mb-32 text-center">
-              <h2 className="text-4xl font-bold mb-8" id="contact">Get in Touch</h2>
+              <h2 className="text-4xl font-bold mb-8">Get in Touch</h2>
               <p className="text-xl mb-8 text-gray-300 max-w-2xl mx-auto">
-                Ready to start your next project? Lets create something amazing together.
+                Ready to start your next project? Let's create something amazing together.
               </p>
               <div className="flex justify-center space-x-4">
                 <Link href="https://github.com/jerrybarry" target="_blank" rel="noopener noreferrer">
